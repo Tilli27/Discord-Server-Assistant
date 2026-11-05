@@ -5,6 +5,7 @@ from discord.ext import commands
 import config
 from database import Database
 from cogs.roleplay import setup as setup_roleplay
+from cogs.profile_browse import setup as setup_profile_browse
 
 class RoleplayBot(commands.Bot):
     def __init__(self):
@@ -16,6 +17,7 @@ class RoleplayBot(commands.Bot):
     async def setup_hook(self) -> None:
         await self.db.initialize()
         await setup_roleplay(self, self.db)
+        await setup_profile_browse(self, self.db)
         if config.GUILD_ID:
             guild = discord.Object(id=config.GUILD_ID)
             self.tree.copy_global_to(guild=guild)
