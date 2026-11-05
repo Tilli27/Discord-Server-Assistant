@@ -21,21 +21,20 @@ Setze `DISCORD_TOKEN` in `.env`; niemals Tokens committen. `GUILD_ID` kann für 
 
 Installiere `requirements.txt`, setze `DISCORD_TOKEN` und optional `GUILD_ID` in den Hoster-Umgebungsvariablen, nutze `python main.py` als Startbefehl und stelle sicher, dass `DATABASE_PATH` auf persistenten Speicher zeigt.
 
+## Steckbrieffelder
+
+- `/feld erstellen name typ pflicht filterbar` unterstützt `text`, `number`, `role`, `image` und `link`. Der Typ `role` bedeutet, dass Spieler für das Feld eine Discord-Rolle auswählen; `image` nimmt Bilddateien auf und `link` HTTPS-Adressen.
+- `/feld rollen hinzufuegen feld_id rolle`, `/feld rollen entfernen feld_id rolle` und `/feld rollen liste feld_id` verwalten die erlaubten Discord-Rollen direkt unter dem Feld-Menü. Nur der Serverinhaber und Rollen mit `felder_verwalten` dürfen das.
+- `/steckbrief-rolle feld_id rolle` setzt ein eigenes Rollenfeld. Sind Optionen für dieses Feld konfiguriert, kann nur eine davon verwendet werden.
+- `/steckbrief-link feld_id url` speichert einen HTTPS-Link in einem Link-Feld.
+- Die Datenbank aktualisiert das Feldtyp-Schema beim Start, erhält bestehende Feld-IDs und gespeicherte Werte.
+
 ## Steckbriefe und Gruppen
 
-- `/steckbrief-alle` zeigt veröffentlichte Profile öffentlich als Dropdown-Liste. Die Auswahl öffnet den gewählten Steckbrief privat; bei über 25 Treffern kann durch die Seiten geblättert werden.
-- `/steckbrief-suche feld_id wert` sucht nur in freigegebenen Feldern. Ergebnisse und Dropdown sind ausschließlich für den Befehl-Aufrufer sichtbar; die Auswahl öffnet das Profil.
-- `/steckbrief-gruppe` öffnet ein privates Dropdown mit den bestehenden Gruppen und den zugehörigen veröffentlichten Steckbriefen.
-- `/gruppe erstellen name farbe` erstellt eine Gruppe mit HEX-Farbe; `/gruppe farbe gruppen_id farbe` ändert die Farbe; `/gruppe liste` zeigt IDs; `/gruppe zuweisen spieler gruppen_id` weist ein veröffentlichtes Profil zu.
-- Gruppen- und Feldverwaltung ist dem Serverinhaber und Rollen mit `felder_verwalten` vorbehalten. Die Gruppenfarbe erscheint am Steckbrief.
-- `/feldrolle hinzufuegen feld_id rolle` und `/feldrolle entfernen feld_id rolle` verwalten die erlaubten Discord-Rollen eines Rollenfeldes. `/steckbrief-rolle feld_id rolle` speichert eine ausgewählte Serverrolle im eigenen Profil. Wenn für das Feld erlaubte Rollen hinterlegt sind, können nur diese gewählt werden.
+- `/steckbrief-alle` zeigt veröffentlichte Profile als Dropdown; die Auswahl öffnet den gewählten Steckbrief.
+- `/steckbrief-suche feld_id wert` sucht nur in freigegebenen Feldern und zeigt private Ergebnisse.
+- `/steckbrief-gruppe` öffnet ein privates Dropdown mit den bestehenden Gruppen.
+- `/gruppe erstellen name farbe`, `/gruppe farbe gruppen_id farbe`, `/gruppe liste` und `/gruppe zuweisen spieler gruppen_id` verwalten Gruppen und ihre HEX-Farben.
+- Profiländerungen setzen ein veröffentlichtes Profil zurück auf privat.
 
-Bestehende Befehle bleiben verfügbar: `/profil bearbeiten`, `/profil setzen`, `/profil vorschau`, `/profil ansehen`, `/profil suche`, `/feld ...`, `/helfer berechtigung` und `/notiz ...`. Profiländerungen setzen ein veröffentlichtes Profil wieder auf privat. SQLite-Schemaerweiterungen werden beim Start mit `CREATE TABLE IF NOT EXISTS` ergänzt und löschen keine bestehenden Profilwerte.
-
-## Projektdateien
-
-- `main.py` – Start und Slash-Synchronisierung
-- `config.py` – Umgebungsvariablen
-- `database.py` – SQLite-Schema
-- `cogs/roleplay.py` – Profile, Helfer, Notizen und Felder
-- `cogs/profile_browse.py` – Steckbriefübersichten, Suche, Gruppen und Rollenoptionen
+Weitere Befehle: `/profil bearbeiten`, `/profil setzen`, `/profil vorschau`, `/profil ansehen`, `/profil suche`, `/helfer berechtigung` und `/notiz ...`.

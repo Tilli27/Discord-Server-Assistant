@@ -6,6 +6,7 @@ import config
 from database import Database
 from cogs.roleplay import setup as setup_roleplay
 from cogs.profile_browse import setup as setup_profile_browse
+from cogs.field_extensions import setup as setup_field_extensions
 
 class RoleplayBot(commands.Bot):
     def __init__(self):
@@ -18,6 +19,7 @@ class RoleplayBot(commands.Bot):
         await self.db.initialize()
         await setup_roleplay(self, self.db)
         await setup_profile_browse(self, self.db)
+        await setup_field_extensions(self, self.db)
         if config.GUILD_ID:
             guild = discord.Object(id=config.GUILD_ID)
             self.tree.copy_global_to(guild=guild)
